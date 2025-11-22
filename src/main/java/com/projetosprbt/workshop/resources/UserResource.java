@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//Anotação indica que este é um recurso web, implementado por controlador rest.
+//Anotação indica que este é um recurso web, implementado por controlador REST.
 @RestController
 //da nome ao recurso.
 @RequestMapping(value = "/users")
