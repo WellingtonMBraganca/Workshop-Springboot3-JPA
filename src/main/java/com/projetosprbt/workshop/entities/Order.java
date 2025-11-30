@@ -1,6 +1,9 @@
 package com.projetosprbt.workshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projetosprbt.workshop.entities.enums.OrderStatus;
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -12,16 +15,21 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Instant instant;
+
+    //anotação garante que instant seja mostrado no json no formato ISO8601
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant moment;
+
+    private OrderStatus orderStatus;
 
     //anotaçãod e açõssiação muitos para um.
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
-    public Order(Long id, Instant instant, User client) {
+    public Order(Long id, Instant moment, User client) {
         this.id = id;
-        this.instant = instant;
+        this.moment = moment;
         this.client = client;
     }
 
@@ -37,12 +45,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Instant getInstant() {
-        return instant;
+    public Instant getMoment() {
+        return moment;
     }
 
-    public void setInstant(Instant instant) {
-        this.instant = instant;
+    public void setMoment(Instant instant) {
+        this.moment = instant;
     }
 
     public User getClient() {

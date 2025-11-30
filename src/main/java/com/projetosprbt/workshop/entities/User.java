@@ -1,5 +1,6 @@
 package com.projetosprbt.workshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,11 @@ public class User {
     private String phone;
     private String password;
 
+    //Anotação que impede loop de relação one to many.
+    //Melhor ser colocado na associação pedidos(muitos para um),
+    //pois se for colocado la no cliente(um para muitos), teremos carregando todos os
+    //pedidos associados aquele cliente. Então é melhor fazer o "lazy
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
