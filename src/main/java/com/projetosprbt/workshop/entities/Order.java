@@ -20,21 +20,22 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
-    private OrderStatus orderStatus;
+    //Para que no banco de dados, seja salvo um valor inteiro...
+    private Integer orderStatus;
 
     //anotaçãod e açõssiação muitos para um.
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, User client, OrderStatus orderStatus) {
         this.id = id;
         this.moment = moment;
         this.client = client;
+        setOrderStatus(orderStatus);
     }
 
     public Order() {
-
     }
 
     public Long getId() {
@@ -60,6 +61,17 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
 
     @Override
     public boolean equals(Object o) {
