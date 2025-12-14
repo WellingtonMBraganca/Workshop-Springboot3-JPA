@@ -19,7 +19,10 @@ public class Product {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     //coleção set garante que um produto não tenha 2 categorias iguais.
     //Já instanciamos para que ela não comesesse nula, vazia, porem não nula.
     private Set<Category> categories = new HashSet<>();
