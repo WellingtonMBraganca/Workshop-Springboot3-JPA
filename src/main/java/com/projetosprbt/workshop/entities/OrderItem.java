@@ -1,5 +1,6 @@
 package com.projetosprbt.workshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projetosprbt.workshop.entities.pk.OrderItemPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -12,7 +13,8 @@ import java.util.Objects;
 public class OrderItem {
 
     @EmbeddedId
-    private OrderItemPK id;
+    //Ha necessidade de instanciação da classe auxiliar.
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
@@ -28,6 +30,7 @@ public class OrderItem {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
