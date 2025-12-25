@@ -30,4 +30,8 @@ public class UserService {
         //.get do optional, retorna o valor contido no objeto obj.
         return obj.get();
     }
+
+    public User insert(User obj){
+        return repository.save(obj);
+    }
 }
