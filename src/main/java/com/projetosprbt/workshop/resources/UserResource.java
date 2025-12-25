@@ -48,4 +48,11 @@ public class UserResource {
         return ResponseEntity.created(uri).body(obj);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        //metodo noCOntent é para respostas vazias e apresenta codigo http 204.
+        return ResponseEntity.noContent().build();
+    }
+
 }
