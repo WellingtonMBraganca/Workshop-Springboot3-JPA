@@ -30,14 +30,14 @@ public class UserResource {
     //(value) indica que a requisição virá acompanhada de um argumento na URL (id).
     @GetMapping(value = "/{id}")
     //para o spring entender que esse argumento é o da requisição acima, PathVariable.
-    public ResponseEntity<User> findById(@PathVariable Long id){
+    public ResponseEntity<User> findById(@PathVariable Long id) {
         User obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     //inserir posting;...
     @PostMapping
-    public ResponseEntity<User> insert(@RequestBody User obj){
+    public ResponseEntity<User> insert(@RequestBody User obj) {
         obj = service.insert(obj);
         //Forma padrao de gerar endereço do novo recurso inserido e apresentar e codigo 201
         //que representa um recurso inserido com um caminho específico.
@@ -49,10 +49,16 @@ public class UserResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         //metodo noCOntent é para respostas vazias e apresenta codigo http 204.
         return ResponseEntity.noContent().build();
     }
 
+    //anotação que permite atualização
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
+        obj = service.update(id, obj);
+        return ResponseEntity.ok().body(obj);
+    }
 }
