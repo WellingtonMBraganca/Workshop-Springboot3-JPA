@@ -1,5 +1,6 @@
 package com.projetosprbt.workshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -16,6 +17,7 @@ public class Payment {
 
     //Na classe dependente, ou seja, na classe que só existe mediate outra, colocamos o one to one...
     // Dependent pois pode haver pedidosem pagamento, mas não o contrario.
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Order order;
