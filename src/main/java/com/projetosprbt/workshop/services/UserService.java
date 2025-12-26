@@ -2,6 +2,7 @@ package com.projetosprbt.workshop.services;
 
 import com.projetosprbt.workshop.entities.User;
 import com.projetosprbt.workshop.repositories.UserRepository;
+import com.projetosprbt.workshop.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,12 @@ public class UserService {
         return repository.findAll();
     }
 
+
     public User findById(Long id){
         //Metodo findById retorna um optional, então, devemos receber em uma variavel optional...
         Optional<User> obj = repository.findById(id);
-        //.get do optional, retorna o valor contido no objeto obj.
-        return obj.get();
+        //orElseThrow tenta dar o get, mas caso não consiga, retorna excessao.
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj){
