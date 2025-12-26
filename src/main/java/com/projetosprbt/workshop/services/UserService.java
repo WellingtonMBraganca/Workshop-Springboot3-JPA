@@ -4,6 +4,7 @@ import com.projetosprbt.workshop.entities.User;
 import com.projetosprbt.workshop.repositories.UserRepository;
 import com.projetosprbt.workshop.services.exceptions.DatabaseException;
 import com.projetosprbt.workshop.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -51,11 +52,15 @@ public class UserService {
     }
 
     public User update(Long id, User obj){
+     try{
         //getReferenceById faz com que esse objeto seja monitorado pelo JPA,
         // para que possamos trabalhar com ele e posteriormente fazer alguma opeção com BD...
         User entity = repository.getReferenceById(id);
         updateData(entity, obj);
         return repository.save(entity);
+    } catch (EntityNotFoundException e ){
+         throw new ResourceNotFoundException(id);
+     }
     }
 
     private void updateData(User entity, User obj) {
